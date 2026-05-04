@@ -33,14 +33,17 @@ input_dict = {
 input_df = pd.DataFrame([input_dict])
 
 # Ensure same column order
-input_df = input_df.reindex(columns=columns, fill_value=0)
+input_df = input_df.reindex(columns=columns)
 
 # Prediction button
 if st.button("Predict"):
     
-    result = model.predict(input_df)
-    
-    if result[0] == 1:
+    result = model.predict(input_df)[0]
+
+    if result == 1:
         st.error("Customer will churn ❌")
     else:
         st.success("Customer will stay ✅")
+        
+    prob = model.predict_proba(input_df)[0][1]
+    st.write("Churn Probability:", round(prob, 2))
