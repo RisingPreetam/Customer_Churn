@@ -38,10 +38,7 @@ input_df = input_df.reindex(columns=columns, fill_value=0)
 # Prediction button
 if st.button("Predict"):
     
-    # ⚠️ IMPORTANT: features order same hona chahiye jo training me tha
-    input_data = np.array([[tenure, monthly_charges]])
-    
-    result = model.predict(input_data)
+    result = model.predict(input_df)
     
     if result[0] == 1:
         st.error("Customer will churn ❌")
