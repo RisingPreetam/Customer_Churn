@@ -36,14 +36,11 @@ input_df = pd.DataFrame([input_dict])
 input_df = input_df.reindex(columns=columns)
 
 # Prediction button
-if st.button("Predict"):
-    
-    result = model.predict(input_df)[0]
+prob = model.predict_proba(input_df)[0][1]
 
-    if result == 1:
-        st.error("Customer will churn ❌")
-    else:
-        st.success("Customer will stay ✅")
-        
-    prob = model.predict_proba(input_df)[0][1]
-    st.write("Churn Probability:", round(prob, 2))
+if prob > 0.3:
+    st.error("Customer will churn ❌")
+else:
+    st.success("Customer will stay ✅")
+
+st.write("Churn Probability:", round(prob, 2))
